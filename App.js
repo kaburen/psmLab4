@@ -27,16 +27,15 @@ export default class App extends React.Component {
                 </View>
 
                 <View style={styles.buttonsContainer}>
-                    {ButtonsData.map((row, number) => (
-                        <View style={styles.buttonsRow} key={number}>
-                            {row.map((item, index) => (
+                    {ButtonsData.map(row => (
+                        <View style={styles.buttonsRow}>
+                            {row.map(item => (
                                 <Button
                                     isDisabled={item.isDisabled}
                                     isHidden={item.isHidden}
                                     doubleButton={item.doubleButton}
                                     actionButton={item.actionButton}
                                     extraButton={item.extraButton}
-                                    key={number.toString() + index.toString()}
                                     fun={() => {
                                         this.handleKeys(item.operation, item.value);
                                     }}>
