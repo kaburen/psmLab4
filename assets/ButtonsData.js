@@ -1,0 +1,42 @@
+export const ButtonsData = [
+    [
+        {name: 'π', operation: 'land', value: 'pi', extraButton: true, isHidden: true},
+        {name: 'x³', operation: 'land', value: 'x3', extraButton: true, isHidden: true},
+        {name: '0', operation: 'digit', value: 0, doubleButton: true},
+        {name: ',', operation: 'comma'},
+        {name: '=', operation: 'port', actionButton: true},
+    ],
+    [
+        {name: 'e', operation: 'land', value: 'e', extraButton: true, isHidden: true},
+        {name: 'x²', operation: 'land', value: 'x2', extraButton: true, isHidden: true},
+        {name: '3', operation: 'digit', value: 3},
+        {name: '2', operation: 'digit', value: 2},
+        {name: '1', operation: 'digit', value: 1},
+        {name: '+', operation: 'operator', value: '+', actionButton: true},
+    ],
+    [
+        {name: 'ln', operation: 'land', value: 'ln', extraButton: true, isHidden: true},
+        {name: 'log10', operation: 'land', value: 'log10', extraButton: true, isHidden: true},
+        {name: '6', operation: 'digit', value: 6},
+        {name: '5', operation: 'digit', value: 5},
+        {name: '4', operation: 'digit', value: 4},
+        {name: '-', operation: 'operator', value: '-', actionButton: true},
+    ],
+    [
+        {name: 'e×', operation: 'land', value: 'ex', extraButton: true, isHidden: true},
+        {name: '10×', operation: 'land', value: '10x', extraButton: true, isHidden: true},
+        {name: '7', operation: 'digit', value: 7},
+        {name: '8', operation: 'digit', value: 8},
+        {name: '9', operation: 'digit', value: 9},
+        {name: 'x', operation: 'operator', value: '*', actionButton: true},
+    ],
+    [
+        {name: 'y√x', operation: 'operator', value: 'sqrt', extraButton: true, isHidden: true},
+        {name: 'x!', operation: 'land', value: 'x!', extraButton: true, isHidden: true},
+        {name: 'AC', operation: 'AC'},
+        {name: '+/-', operation: 'sign',isHidden: true},
+        {name: '%', operation: 'land', value: '%',isHidden: true},
+        {name: '', isDisabled: true, doubleButton: true},
+        {name: '÷', operation: 'operator', value: '/', actionButton: true},
+    ],
+];

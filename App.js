@@ -2,7 +2,7 @@ import React from 'react';
 import {StyleSheet, Text, View} from 'react-native';
 import Button from "./components/button";
 import calculate from "./utils/calcOperations";
-import {factorial} from 'mathjs';
+import {ButtonsData} from "./assets/ButtonsData"
 
 export default class App extends React.Component {
     constructor() {
@@ -27,46 +27,64 @@ export default class App extends React.Component {
                 </View>
 
                 <View style={styles.buttonsContainer}>
-                    <View style={styles.buttonsRow}>
-                        <Button isHidden extraButton fun={() => this.handleKeys("land",'pi')}>π</Button>
-                        <Button isHidden extraButton fun={() => this.handleKeys("land",'x3')}>x³</Button>
-                        <Button doubleButton fun={() => this.handleKeys("digit", 0)}>0</Button>
-                        <Button fun={() => this.handleKeys("comma")}>,</Button>
-                        <Button actionButton fun={() => this.handleKeys("port")}>=</Button>
-                    </View>
-                    <View style={styles.buttonsRow}>
-                        <Button isHidden extraButton fun={() => this.handleKeys("land",'e')}>e</Button>
-                        <Button isHidden extraButton fun={() => this.handleKeys("land",'x2')}>x²</Button>
-                        <Button fun={() => this.handleKeys("digit", 1)}>1</Button>
-                        <Button fun={() => this.handleKeys("digit", 2)}>2</Button>
-                        <Button fun={() => this.handleKeys("digit", 3)}>3</Button>
-                        <Button actionButton fun={() => this.handleKeys("operator",'+')}>+</Button>
-                    </View>
-                    <View style={styles.buttonsRow}>
-                        <Button isHidden extraButton fun={() => this.handleKeys("land",'ln')}>ln</Button>
-                        <Button isHidden extraButton fun={() => this.handleKeys("land",'log10')}>log10</Button>
-                        <Button fun={() => this.handleKeys("digit", 4)}>4</Button>
-                        <Button fun={() => this.handleKeys("digit", 5)}>5</Button>
-                        <Button fun={() => this.handleKeys("digit", 6)}>6</Button>
-                        <Button actionButton fun={() => this.handleKeys("operator",'-')}>-</Button>
-                    </View>
-                    <View style={styles.buttonsRow}>
-                        <Button isHidden extraButton fun={() => this.handleKeys("land",'ex')}>e×</Button>
-                        <Button isHidden extraButton fun={() => this.handleKeys("land",'10x')}>10×</Button>
-                        <Button fun={() => this.handleKeys("digit", 7)}>7</Button>
-                        <Button fun={() => this.handleKeys("digit", 8)}>8</Button>
-                        <Button fun={() => this.handleKeys("digit", 9)}>9</Button>
-                        <Button actionButton fun={() => this.handleKeys("operator",'*')}>x</Button>
-                    </View>
-                    <View style={styles.buttonsRow}>
-                        <Button isHidden extraButton fun={() => this.handleKeys("operator",'sqrt')}>x√y</Button>
-                        <Button isHidden extraButton fun={() => this.handleKeys( "land",'x!')}>x!</Button>
-                        <Button fun={() => this.handleKeys("AC")}>AC</Button>
-                        <Button isHidden fun={() => this.handleKeys("sign")}>+/-</Button>
-                        <Button isHidden fun={() => this.handleKeys("land",'%')}>%</Button>
-                        <Button isDisabled doubleButton> </Button>
-                        <Button actionButton fun={() => this.handleKeys("operator",'/')}>÷</Button>
-                    </View>
+                    {ButtonsData.map((row, number) => (
+                        <View style={styles.buttonsRow} key={number}>
+                            {row.map((item, index) => (
+                                <Button
+                                    isDisabled={item.isDisabled}
+                                    isHidden={item.isHidden}
+                                    doubleButton={item.doubleButton}
+                                    actionButton={item.actionButton}
+                                    extraButton={item.extraButton}
+                                    key={number.toString() + index.toString()}
+                                    fun={() => {
+                                        this.handleKeys(item.operation, item.value);
+                                    }}>
+                                    {item.name}
+                                </Button>
+                            ))}
+                        </View>
+                    ))}
+                    {/*<View style={styles.buttonsRow}>*/}
+                    {/*    <Button isHidden extraButton fun={() => this.handleKeys("land",'pi')}>π</Button>*/}
+                    {/*    <Button isHidden extraButton fun={() => this.handleKeys("land",'x3')}>x³</Button>*/}
+                    {/*    <Button doubleButton fun={() => this.handleKeys("digit", 0)}>0</Button>*/}
+                    {/*    <Button fun={() => this.handleKeys("comma")}>,</Button>*/}
+                    {/*    <Button actionButton fun={() => this.handleKeys("port")}>=</Button>*/}
+                    {/*</View>*/}
+                    {/*<View style={styles.buttonsRow}>*/}
+                    {/*    <Button isHidden extraButton fun={() => this.handleKeys("land",'e')}>e</Button>*/}
+                    {/*    <Button isHidden extraButton fun={() => this.handleKeys("land",'x2')}>x²</Button>*/}
+                    {/*    <Button fun={() => this.handleKeys("digit", 1)}>1</Button>*/}
+                    {/*    <Button fun={() => this.handleKeys("digit", 2)}>2</Button>*/}
+                    {/*    <Button fun={() => this.handleKeys("digit", 3)}>3</Button>*/}
+                    {/*    <Button actionButton fun={() => this.handleKeys("operator",'+')}>+</Button>*/}
+                    {/*</View>*/}
+                    {/*<View style={styles.buttonsRow}>*/}
+                    {/*    <Button isHidden extraButton fun={() => this.handleKeys("land",'ln')}>ln</Button>*/}
+                    {/*    <Button isHidden extraButton fun={() => this.handleKeys("land",'log10')}>log10</Button>*/}
+                    {/*    <Button fun={() => this.handleKeys("digit", 4)}>4</Button>*/}
+                    {/*    <Button fun={() => this.handleKeys("digit", 5)}>5</Button>*/}
+                    {/*    <Button fun={() => this.handleKeys("digit", 6)}>6</Button>*/}
+                    {/*    <Button actionButton fun={() => this.handleKeys("operator",'-')}>-</Button>*/}
+                    {/*</View>*/}
+                    {/*<View style={styles.buttonsRow}>*/}
+                    {/*    <Button isHidden extraButton fun={() => this.handleKeys("land",'ex')}>e×</Button>*/}
+                    {/*    <Button isHidden extraButton fun={() => this.handleKeys("land",'10x')}>10×</Button>*/}
+                    {/*    <Button fun={() => this.handleKeys("digit", 7)}>7</Button>*/}
+                    {/*    <Button fun={() => this.handleKeys("digit", 8)}>8</Button>*/}
+                    {/*    <Button fun={() => this.handleKeys("digit", 9)}>9</Button>*/}
+                    {/*    <Button actionButton fun={() => this.handleKeys("operator",'*')}>x</Button>*/}
+                    {/*</View>*/}
+                    {/*<View style={styles.buttonsRow}>*/}
+                    {/*    <Button isHidden extraButton fun={() => this.handleKeys("operator",'sqrt')}>x√y</Button>*/}
+                    {/*    <Button isHidden extraButton fun={() => this.handleKeys( "land",'x!')}>x!</Button>*/}
+                    {/*    <Button fun={() => this.handleKeys("AC")}>AC</Button>*/}
+                    {/*    <Button isHidden fun={() => this.handleKeys("sign")}>+/-</Button>*/}
+                    {/*    <Button isHidden fun={() => this.handleKeys("land",'%')}>%</Button>*/}
+                    {/*    <Button isDisabled doubleButton> </Button>*/}
+                    {/*    <Button actionButton fun={() => this.handleKeys("operator",'/')}>÷</Button>*/}
+                    {/*</View>*/}
                 </View>
 
             </View>

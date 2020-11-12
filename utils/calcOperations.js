@@ -66,20 +66,20 @@ const portCalc = (state) => {
     if (operation !== '') {
         switch (operation) {
             case '+':
-                outcome = parseFloat(result) + part;
+                outcome = parseFloat(result) + parseFloat(part);
                 break;
             case '-':
-                outcome = part - parseFloat(result);
+                outcome = parseFloat(part) - parseFloat(result);
                 break;
             case '*':
-                outcome = parseFloat(result) * part;
+                outcome = parseFloat(result) * parseFloat(part);
                 break;
             case '/':
                 if (parseFloat(result) === 0) {
                     console.log("Dzielenie przez 0");
                     return;
                 } else {
-                    outcome = part / parseFloat(result);
+                    outcome = parseFloat(part) / parseFloat(result);
                 }
                 break;
             case 'sqrt':
@@ -87,7 +87,7 @@ const portCalc = (state) => {
                     console.log("Pieriwastek z liczby ujemnej");
                     return;
                 } else {
-                    outcome = Math.pow(part, 1 / result);
+                    outcome = Math.pow(parseFloat(part), 1 / result);
                 }
                 break;
         }
