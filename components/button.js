@@ -45,8 +45,6 @@ class Button extends React.Component {
                 ]}>{children}</Text></TouchableOpacity>
         )
     }
-
-
 }
 
 const styles = StyleSheet.create({
