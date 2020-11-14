@@ -36,7 +36,7 @@ const evalExpression = (state) => {
 }
 
 const validateExpression = (state) => {
-    let signsArr = ['+', '-', '/', '*', '('];
+    let signsArr = ['+', '-', '/', '*', '(', '^'];
     return !signsArr.includes(state.result.toString().slice(-1));
 
 }
@@ -80,7 +80,7 @@ const handleDigits = (digit, state) => {
 const handleComma = (state) => {
     const {part} = state
     let result = state.result.toString()
-    if (!part.includes(".") && result !== '' && !['+', '-', '/', '*'].includes(result.slice(-1))) {
+    if (!part.includes(".") && result !== '' && !['+', '-', '/', '*','^'].includes(result.slice(-1))) {
         return {result: result + '.', part: part + '.'}
     }
 }
@@ -89,9 +89,9 @@ const handleBack = (state) => {
     const {part} = state
     let result = state.result.toString()
     let op = state.operation
-    if (!['+', '-', '/', '*'].includes(result.slice(-2, -1))) {
+    if (!['+', '-', '/', '*', '^'].includes(result.slice(-2, -1))) {
         op = false
-    }else if(['+', '-', '/', '*'].includes(result.slice(-2, -1))){
+    }else if(['+', '-', '/', '*','^'].includes(result.slice(-2, -1))){
         op = true
     }
     return {result: result.substring(0, result.length - 1), part: part.substring(0, part.length - 1) ,operation:op}
