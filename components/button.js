@@ -7,16 +7,13 @@ class Button extends React.Component {
     constructor() {
         super();
         this.state = {
-            orientation: ''
+            orientation: Dimensions.get('window').width < Dimensions.get('window').height ? 'port' :'land'
         };
     }
 
     getOrientation = () => {
-        if (Dimensions.get('window').width < Dimensions.get('window').height) {
-            this.setState({orientation: 'port'});
-        } else {
-            this.setState({orientation: 'land'});
-        }
+        Dimensions.get('window').width < Dimensions.get('window').height ? this.setState({orientation: 'port'}) :
+            this.setState({orientation: 'land'})
     };
 
     componentDidMount() {

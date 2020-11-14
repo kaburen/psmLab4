@@ -8,9 +8,9 @@ export default class App extends React.Component {
     constructor() {
         super();
         this.state = {
-            result: 0,
+            result: '0',
             part: '',
-            operation: '',
+            operation: false,
         };
     }
 
@@ -67,7 +67,7 @@ const styles = StyleSheet.create({
         justifyContent: 'flex-end',
     },
     resultTexT: {
-        fontSize: 64,
+        fontSize: 52,
         color: 'white',
         paddingHorizontal: 10,
     },
