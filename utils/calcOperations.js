@@ -32,7 +32,7 @@ const handleAC = () => {
 }
 
 const evalExpression = (state) => {
-    return validateExpression(state) && {result: evaluate(state.result.toString()), part: '', operation: false}
+    return validateBrackets(state) && validateExpression(state) && {result: evaluate(state.result.toString()), part: '', operation: false}
 }
 
 const validateExpression = (state) => {
