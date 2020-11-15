@@ -1,8 +1,10 @@
 import React from 'react';
 import {StyleSheet, Text, View} from 'react-native';
-import Button from "./components/button";
+import Button from "./components/Button";
+import MyModal from "./components/MyModal";
 import calculate from "./utils/calcOperations";
 import {ButtonsData} from "./assets/ButtonsData"
+
 
 export default class App extends React.Component {
     constructor() {
@@ -11,7 +13,13 @@ export default class App extends React.Component {
             result: '0',
             part: '',
             operation: false,
+            isError: false,
+            errMess: ''
         };
+    }
+
+    disableModal = (visible) => {
+        this.setState({result: '0', part: '', operation: false, isError: visible});
     }
 
     handleKeys = (operation, value) => {
@@ -25,6 +33,11 @@ export default class App extends React.Component {
                 <View style={styles.resultContainer}>
                     <Text style={styles.resultTexT}>{result}</Text>
                 </View>
+                <MyModal visible={this.state.isError}
+                         errMess={this.state.errMess}
+                         onPress={() => {
+                             this.disableModal(!this.state.isError);
+                         }}/>
 
                 <View style={styles.buttonsContainer}>
                     {ButtonsData.map((row, number) => (

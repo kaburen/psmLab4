@@ -37,8 +37,8 @@ export const ButtonsData = [
         {name: '(', operation: 'bracket', value: '(',extraButton:true, isHidden: true},
         {name: ')', operation: 'bracket', value: ')',extraButton:true, isHidden: true},
         {name: 'AC', operation: 'AC'},
-        {name: '<-', operation: 'backspace',isHidden: true},
-        {name: '', isDisabled: true, doubleButton: true},
+        {name: '', isDisabled: true},
+        {name: '<-', operation: 'backspace'},
         {name: '÷', operation: 'operator', value: '/', actionButton: true},
     ],
 ];
