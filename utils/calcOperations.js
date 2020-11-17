@@ -36,8 +36,12 @@ const handleAC = () => {
 
 const evalExpression = (state) => {
     try {
-        return validateBrackets(state) && validateExpression(state) && {
-            result: JSON.stringify(evaluate(state.result.toString())), part: '', operation: false
+        if(!JSON.stringify(evaluate(state.result.toString())).startsWith("{")) {
+            return validateBrackets(state) && validateExpression(state) && {
+                result: evaluate(state.result.toString()), part: '', operation: false
+            }
+        }else {
+            return {result: '', part: '', operation: false, isError: true, errMess: "Wrong input"}
         }
     } catch (e) {
         return {result: '', part: '', operation: false, isError: true, errMess: e.message}
