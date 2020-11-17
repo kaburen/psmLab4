@@ -1,153 +1,146 @@
-import {factorial} from "mathjs";
+import {evaluate} from "mathjs";
 
 
 const calculate = (operation, value, state) => {
     switch (operation) {
         case "digit":
             return handleDigits(value, state)
-        case "AC":
-            return handleAC()
-        case "sign":
-            return handleSign(state)
-        case "comma":
-            return handleComma(state)
+        case "eval":
+            return evalExpression(state)
         case "operator":
             return handleOp(value, state)
-        case "port":
-            return portCalc(state)
         case "land":
             return landCalc(value, state)
+        case "backspace":
+            return handleBack(state)
+        case "comma":
+            return handleComma(state)
+        case "AC":
+            return handleAC()
+        case "bracket":
+            return handleBrackets(value, state)
     }
 }
 export default calculate
 
+const signs = ['+', '-', '/', '*', '(', '^'];
+
 const handleAC = () => {
     return {
-        result: 0,
+
+        result: '0',
         part: '',
-        operation: ''
+        operation: false
+    }
+}
+
+const evalExpression = (state) => {
+    try {
+        return validateBrackets(state) && validateExpression(state) && {
+            result: JSON.stringify(evaluate(state.result.toString())), part: '', operation: false
+        }
+    } catch (e) {
+        return {result: '', part: '', operation: false, isError: true, errMess: e.message}
+    }
+}
+
+const validateExpression = (state) => {
+    return !signs.includes(state.result.toString().slice(-1));
+
+}
+
+const validateBrackets = (state) => {
+    let opened = true;
+
+    Array.from(state.result).map(value => {
+        if (value === '(') {
+            opened = false
+        }
+        if (value === ')') {
+            opened = true
+        }
+    })
+    return opened
+}
+
+const handleBrackets = (bracket, state) => {
+    const {result} = state
+    if (state.result === 0 || state.result === "0") {
+        if (validateBrackets(state) && bracket === '(') {
+            return {result: bracket, part: bracket, operation: false}
+        }
+    } else {
+        if (!validateBrackets(state) && bracket === ')' && !signs.includes(state.result.toString().slice(-1))) {
+            return {result: result.toString() + bracket, part: state.part.toString() + bracket, operation: false}
+        } else if (validateBrackets(state) && bracket === '(') {
+            return {result: result.toString() + bracket, part: state.part.toString() + bracket, operation: false}
+        }
     }
 }
 
 const handleDigits = (digit, state) => {
     if (state.result === 0 || state.result === "0") {
-        return {result: digit}
+        return {result: digit.toString(), part: digit.toString()}
     } else {
-        return {result: state.result.toString() + digit}
+        return {result: state.result.toString() + digit, part: state.part.toString() + digit, operation: false}
     }
 }
 
 const handleComma = (state) => {
-    let display = state.result.toString();
-    if (!display.includes(".")) {
-        return {result: display + '.'}
-    } else if (display[display.length - 1] === '.') {
-        return {result: display.substring(0, state.result.length - 1)}
+    const {part} = state
+    let result = state.result.toString()
+    if (!part.includes(".") && result !== '' && !signs.includes(result.slice(-1))) {
+        return {result: result + '.', part: part + '.'}
     }
 }
 
-const handleSign = (state) => {
-    let sign = parseFloat(state.result);
-    return {result: -sign}
+const handleBack = (state) => {
+    const {part} = state
+    let result = state.result.toString()
+    let op = state.operation
+    if (!['+', '-', '/', '*', '^'].includes(result.slice(-2, -1))) {
+        op = false
+    } else if (['+', '-', '/', '*', '^'].includes(result.slice(-2, -1))) {
+        op = true
+    }
+    return {result: result.substring(0, result.length - 1), part: part.substring(0, part.length - 1), operation: op}
 }
 
 const handleOp = (op, state) => {
-    let previous = parseFloat(state.result);
-    if (state.operation === '') {
-        return {result: 0, part: previous, operation: op}
+    if (state.operation === false) {
+        return {result: state.result.toString() + op, part: '', operation: true}
+
     } else {
-        return {operation: op}
+        return {result: state.result.toString().substring(0, state.result.length - 1) + op, part: ''}
     }
 }
-
-const portCalc = (state) => {
-    let outcome;
-    const {operation, result, part} = state;
-    if (operation !== '') {
-        switch (operation) {
-            case '+':
-                outcome = parseFloat(result) + part;
-                break;
-            case '-':
-                outcome = part - parseFloat(result);
-                break;
-            case '*':
-                outcome = parseFloat(result) * part;
-                break;
-            case '/':
-                if (parseFloat(result) === 0) {
-                    console.log("Dzielenie przez 0");
-                    return;
-                } else {
-                    outcome = part / parseFloat(result);
-                }
-                break;
-            case 'sqrt':
-                if (parseFloat(part) < 0) {
-                    console.log("Pieriwastek z liczby ujemnej");
-                    return;
-                } else {
-                    outcome = Math.pow(part, 1 / result);
-                }
-                break;
-        }
-        return{result: outcome, second: 0, operation: ''}
-    }
-}
-
-
 const landCalc = (op, state) => {
     let outcome;
-    const {result, part, operation} = state;
-    switch (op) {
-        case 'x2':
-            outcome = Math.pow(result, 2);
-            break;
-        case 'x3':
-            outcome = Math.pow(result, 3);
-            break;
-        case 'ex':
-            outcome = Math.E * result;
-            break;
-        case 'ln':
-            if (result <= 0) {
-                console.log("Logarytm z niedodatniej");
-                return;
-            } else {
-                outcome = Math.log(result);
-            }
-            break;
-        case 'e':
-            outcome = Math.E;
-            break;
-        case 'pi':
-            outcome = Math.PI.toPrecision(14);
-            break;
-        case 'x!':
-            if (result <= 0) {
-                console.log("Silnia z niedodatniej");
-                return;
-            } else {
-                outcome = factorial(result);
-            }
-            break;
-        case '10x':
-            outcome = Math.pow(10, result);
-            break;
-        case 'log10':
-            if (result <= 0) {
-                console.log("Logarytm z niedodatniej");
-                return;
-            } else {
-                outcome = Math.log10(result);
-            }
-            break;
-        case '%':
-            if (operation === "*" || operation === "/") {
-                outcome = result / 100;
-            } else {
-                outcome = (part * result) / 100;
-            }
+    try {
+        let result = (validateExpression(state) && validateBrackets(state) && evaluate(state.result))
+
+        switch (op) {
+            case 'ex':
+                outcome = Math.pow(Math.E, result)
+                break
+            case 'ln':
+                if (result <= 0) {
+                    console.log("Logarytm z niedodatniej")
+                    return
+                } else {
+                    outcome = Math.log(parseFloat(result))
+                }
+                break
+            case 'log10':
+                if (result <= 0) {
+                    console.log("Logarytm z niedodatniej")
+                    return
+                } else {
+                    outcome = Math.log10(result);
+                }
+        }
+        return {result: outcome.toString(), part: '', operation: false}
+    } catch (e) {
+        return {result: '', part: '', operation: false, isError: true, errMess: e.message}
     }
-    return{result: outcome};
 }
