@@ -17,7 +17,6 @@ const calculate = (operation, value, state) => {
             return handleComma(state)
         case "AC":
             return handleAC()
-
         case "bracket":
             return handleBrackets(value, state)
     }
@@ -28,6 +27,7 @@ const signs = ['+', '-', '/', '*', '(', '^'];
 
 const handleAC = () => {
     return {
+
         result: '0',
         part: '',
         operation: false
@@ -37,7 +37,7 @@ const handleAC = () => {
 const evalExpression = (state) => {
     try {
         return validateBrackets(state) && validateExpression(state) && {
-            result: evaluate(state.result.toString()), part: '', operation: false
+            result: JSON.stringify(evaluate(state.result.toString())), part: '', operation: false
         }
     } catch (e) {
         return {result: '', part: '', operation: false, isError: true, errMess: e.message}
@@ -139,7 +139,7 @@ const landCalc = (op, state) => {
                     outcome = Math.log10(result);
                 }
         }
-        return {result: outcome, part: '', operation: false}
+        return {result: outcome.toString(), part: '', operation: false}
     } catch (e) {
         return {result: '', part: '', operation: false, isError: true, errMess: e.message}
     }
