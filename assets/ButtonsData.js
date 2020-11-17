@@ -33,7 +33,7 @@ export const ButtonsData = [
         {name: 'x', operation: 'operator', value: '*', actionButton: true},
     ],
     [
-        {name: 'y√x', operation: 'operator', value: '^(1/', extraButton: true, isHidden: true},
+        {name: '√x', operation: 'digit', value: 'sqrt(', extraButton: true, isHidden: true},
         {name: '(', operation: 'bracket', value: '(',extraButton:true, isHidden: true},
         {name: ')', operation: 'bracket', value: ')',extraButton:true, isHidden: true},
         {name: 'AC', operation: 'AC'},

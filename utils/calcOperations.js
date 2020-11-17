@@ -9,8 +9,6 @@ const calculate = (operation, value, state) => {
             return evalExpression(state)
         case "operator":
             return handleOp(value, state)
-        case "land":
-            return landCalc(value, state)
         case "backspace":
             return handleBack(state)
         case "comma":
@@ -36,13 +34,10 @@ const handleAC = () => {
 
 const evalExpression = (state) => {
     try {
-        if(!JSON.stringify(evaluate(state.result.toString())).startsWith("{")) {
-            return validateBrackets(state) && validateExpression(state) && {
-                result: evaluate(state.result.toString()), part: '', operation: false
-            }
-        }else {
-            return {result: '', part: '', operation: false, isError: true, errMess: "Wrong input"}
+        return validateBrackets(state) && validateExpression(state) && {
+            result: evaluate(state.result.toString()).toString(), part: '', operation: false
         }
+
     } catch (e) {
         return {result: '', part: '', operation: false, isError: true, errMess: e.message}
     }
@@ -118,33 +113,4 @@ const handleOp = (op, state) => {
         return {result: state.result.toString().substring(0, state.result.length - 1) + op, part: ''}
     }
 }
-const landCalc = (op, state) => {
-    let outcome;
-    try {
-        let result = (validateExpression(state) && validateBrackets(state) && evaluate(state.result))
 
-        switch (op) {
-            case 'ex':
-                outcome = Math.pow(Math.E, result)
-                break
-            case 'ln':
-                if (result <= 0) {
-                    console.log("Logarytm z niedodatniej")
-                    return
-                } else {
-                    outcome = Math.log(parseFloat(result))
-                }
-                break
-            case 'log10':
-                if (result <= 0) {
-                    console.log("Logarytm z niedodatniej")
-                    return
-                } else {
-                    outcome = Math.log10(result);
-                }
-        }
-        return {result: outcome.toString(), part: '', operation: false}
-    } catch (e) {
-        return {result: '', part: '', operation: false, isError: true, errMess: e.message}
-    }
-}
