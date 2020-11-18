@@ -17,15 +17,15 @@ export const ButtonsData = [
         {name: '+', operation: 'operator', value: '+', actionButton: true},
     ],
     [
-        {name: 'ln', operation: 'land', value: 'ln', extraButton: true, isHidden: true},
-        {name: 'log10', operation: 'land', value: 'log10', extraButton: true, isHidden: true},
+        {name: 'ln', operation: 'digit', value: 'log(', extraButton: true, isHidden: true},
+        {name: 'log10', operation: 'digit', value: 'log10(', extraButton: true, isHidden: true},
         {name: '4', operation: 'digit', value: 4},
         {name: '5', operation: 'digit', value: 5},
         {name: '6', operation: 'digit', value: 6},
         {name: '-', operation: 'operator', value: '-', actionButton: true},
     ],
     [
-        {name: 'e×', operation: 'land', value: 'ex', extraButton: true, isHidden: true},
+        {name: 'e×', operation: 'digit', value: 'e^', extraButton: true, isHidden: true},
         {name: 'y×', operation: 'operator', value: '^', extraButton: true, isHidden: true},
         {name: '7', operation: 'digit', value: 7},
         {name: '8', operation: 'digit', value: 8},
