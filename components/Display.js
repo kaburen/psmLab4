@@ -13,8 +13,8 @@ const styles = StyleSheet.create({
         resultContainer: {
             flex: 1.5,
             justifyContent: 'flex-end',
-            flexWrap: 'wrap-reverse',
-            flexDirection: 'row'
+            alignItems: 'flex-end'
+
         },
         resultTexT: {
             fontSize: 56,
