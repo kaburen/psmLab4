@@ -1,7 +1,7 @@
 export const ButtonsData = [
     [
         {name: 'π', operation: 'digit', value: 'pi', extraButton: true, isHidden: true},
-        {name: 'x³', operation: 'operator', value: '^3', extraButton: true, isHidden: true},
+        {name: 'x³', operation: 'digit', value: '^3', extraButton: true, isHidden: true},
         {name: 'x!', operation: 'operator', value: '!', extraButton: true, isHidden: true},
         {name: '', isDisabled: true},
         {name: '0', operation: 'digit', value: 0,},
@@ -10,7 +10,7 @@ export const ButtonsData = [
     ],
     [
         {name: 'e', operation: 'digit', value: 'e', extraButton: true, isHidden: true},
-        {name: 'x²', operation: 'operator', value: '^2', extraButton: true, isHidden: true},
+        {name: 'x²', operation: 'digit', value: '^2', extraButton: true, isHidden: true},
         {name: '1', operation: 'digit', value: 1},
         {name: '2', operation: 'digit', value: 2},
         {name: '3', operation: 'digit', value: 3},

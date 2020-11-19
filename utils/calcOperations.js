@@ -34,7 +34,7 @@ const handleAC = () => {
 
 const evalExpression = (state) => {
     try {
-        return validateExpression(state) && {
+        return !validateBrackets(state) && validateExpression(state) && {
             result: evaluate(state.result.toString()).toString(), part: '', operation: false
         }
 
@@ -47,7 +47,6 @@ const validateExpression = (state) => {
     return !signs.includes(state.result.toString().slice(-1));
 
 }
-
 const validateBrackets = (state) => {
     let op = 0;
     let cl = 0;
@@ -61,7 +60,7 @@ const validateBrackets = (state) => {
         }
     })
 
-    return op>cl
+    return op > cl
 }
 
 const handleBrackets = (bracket, state) => {
@@ -71,7 +70,7 @@ const handleBrackets = (bracket, state) => {
             return {result: bracket, part: bracket, operation: false}
         }
     } else {
-        if (validateBrackets(state) && bracket === ')' && !['+', '-', '/', '*','^'].includes(state.result.toString().slice(-1))) {
+        if (validateBrackets(state) && bracket === ')' && !['+', '-', '/', '*', '^'].includes(state.result.toString().slice(-1))) {
             return {result: result.toString() + bracket, part: state.part.toString() + bracket, operation: false}
         } else if (bracket === '(') {
             return {result: result.toString() + bracket, part: state.part.toString() + bracket, operation: false}

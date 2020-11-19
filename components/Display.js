@@ -4,7 +4,7 @@ import {StyleSheet, Text, View} from "react-native";
 class Display extends React.Component {
     render() {
         return <View style={styles.resultContainer}>
-            <Text style={styles.resultTexT}>{this.props.result}</Text>
+            <Text adjustsFontSizeToFit numberOfLines ={1} style={styles.resultTexT}>{this.props.result}</Text>
         </View>;
     }
 }
@@ -12,11 +12,12 @@ class Display extends React.Component {
 const styles = StyleSheet.create({
         resultContainer: {
             flex: 1.5,
-            alignItems: 'flex-end',
             justifyContent: 'flex-end',
+            flexWrap: 'wrap-reverse',
+            flexDirection: 'row'
         },
         resultTexT: {
-            fontSize: 52,
+            fontSize: 56,
             color: 'white',
             paddingHorizontal: 10,
         }
