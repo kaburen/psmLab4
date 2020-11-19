@@ -9,8 +9,6 @@ const calculate = (operation, value, state) => {
             return evalExpression(state)
         case "operator":
             return handleOp(value, state)
-        case "land":
-            return landCalc(value, state)
         case "backspace":
             return handleBack(state)
         case "comma":
@@ -36,9 +34,10 @@ const handleAC = () => {
 
 const evalExpression = (state) => {
     try {
-        return validateBrackets(state) && validateExpression(state) && {
-            result: JSON.stringify(evaluate(state.result.toString())), part: '', operation: false
+        return !validateBrackets(state) && validateExpression(state) && {
+            result: evaluate(state.result.toString()).toString(), part: '', operation: false
         }
+
     } catch (e) {
         return {result: '', part: '', operation: false, isError: true, errMess: e.message}
     }
@@ -48,31 +47,32 @@ const validateExpression = (state) => {
     return !signs.includes(state.result.toString().slice(-1));
 
 }
-
 const validateBrackets = (state) => {
-    let opened = true;
+    let op = 0;
+    let cl = 0;
 
     Array.from(state.result).map(value => {
         if (value === '(') {
-            opened = false
+            op++;
         }
         if (value === ')') {
-            opened = true
+            cl++;
         }
     })
-    return opened
+
+    return op > cl
 }
 
 const handleBrackets = (bracket, state) => {
     const {result} = state
     if (state.result === 0 || state.result === "0") {
-        if (validateBrackets(state) && bracket === '(') {
+        if (bracket === '(') {
             return {result: bracket, part: bracket, operation: false}
         }
     } else {
-        if (!validateBrackets(state) && bracket === ')' && !signs.includes(state.result.toString().slice(-1))) {
+        if (validateBrackets(state) && bracket === ')' && !['+', '-', '/', '*', '^'].includes(state.result.toString().slice(-1))) {
             return {result: result.toString() + bracket, part: state.part.toString() + bracket, operation: false}
-        } else if (validateBrackets(state) && bracket === '(') {
+        } else if (bracket === '(') {
             return {result: result.toString() + bracket, part: state.part.toString() + bracket, operation: false}
         }
     }
@@ -114,33 +114,4 @@ const handleOp = (op, state) => {
         return {result: state.result.toString().substring(0, state.result.length - 1) + op, part: ''}
     }
 }
-const landCalc = (op, state) => {
-    let outcome;
-    try {
-        let result = (validateExpression(state) && validateBrackets(state) && evaluate(state.result))
 
-        switch (op) {
-            case 'ex':
-                outcome = Math.pow(Math.E, result)
-                break
-            case 'ln':
-                if (result <= 0) {
-                    console.log("Logarytm z niedodatniej")
-                    return
-                } else {
-                    outcome = Math.log(parseFloat(result))
-                }
-                break
-            case 'log10':
-                if (result <= 0) {
-                    console.log("Logarytm z niedodatniej")
-                    return
-                } else {
-                    outcome = Math.log10(result);
-                }
-        }
-        return {result: outcome.toString(), part: '', operation: false}
-    } catch (e) {
-        return {result: '', part: '', operation: false, isError: true, errMess: e.message}
-    }
-}

@@ -4,6 +4,7 @@ import Button from "./components/Button";
 import MyModal from "./components/MyModal";
 import calculate from "./utils/calcOperations";
 import {ButtonsData} from "./assets/ButtonsData"
+import Display from "./components/Display";
 
 
 export default class App extends React.Component {
@@ -30,9 +31,7 @@ export default class App extends React.Component {
         const {result} = this.state;
         return (
             <View style={styles.container}>
-                <View style={styles.resultContainer}>
-                    <Text style={styles.resultTexT}>{result}</Text>
-                </View>
+                <Display result={result}/>
                 <MyModal visible={this.state.isError}
                          errMess={this.state.errMess}
                          onPress={() => {
@@ -73,16 +72,6 @@ const styles = StyleSheet.create({
         flex: 4,
         flexWrap: 'wrap',
         flexDirection: 'column-reverse',
-    },
-    resultContainer: {
-        flex: 1.5,
-        alignItems: 'flex-end',
-        justifyContent: 'flex-end',
-    },
-    resultTexT: {
-        fontSize: 52,
-        color: 'white',
-        paddingHorizontal: 10,
     },
     buttonsRow: {
         flex: 1,
